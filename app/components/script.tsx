@@ -54,7 +54,13 @@ type User = {  // type alias - is a way to give a name to a type
     fullName: string,
     age: number,
     height: string,
-    career?: string
+    career?: string,
+    car?: {
+        color:string,
+        engine: string,
+        model: string,
+        seats:number[]
+    }
 }
 
 interface IUser {  // interface - is a way to define the shape of an object
@@ -109,3 +115,78 @@ const admin: UserwithRole = {
     career: "Engineer",
     isAdmin: true
 }
+
+
+// Pick - is a utility type that allows you to create a new type by picking a set of properties from an existing type
+
+type SimpleUser = Pick<User, "fullName" | "age" | "car"> 
+const simpleMe:SimpleUser ={
+    fullName: "",
+    age: 0
+} 
+
+
+
+
+// Omit - is a utility type that allows you to create a new type by omitting a set of properties from an existing type
+
+
+
+type UserExcludingCar = Omit<User, "car" | "career"> 
+
+const UserWithoutCar:UserExcludingCar ={
+    fullName: "",
+    age: 0,
+    height: ""
+}
+
+
+// if you need less, you can use pick
+// if you need more from the type, you can use omit to remove what you dont want
+
+
+// type ComplexProducts = {
+//       "id": number,
+//       "title": string,
+//       "description": string,
+//       "category": string,
+//       "price": number,
+//       "discountPercentage": number,
+//       "rating": number,
+//       "stock": number,
+//       "tags": string[]
+//       "brand": string,
+//       "sku": string,
+//       "weight": number,
+//       "dimensions": {
+//         "width": number,
+//         "height": number,
+//         "depth": number
+//       },
+//       "warrantyInformation": string,
+//       "shippingInformation": string,
+//       "availabilityStatus": string,
+//       "reviews": RatingsDeets[],
+
+//       "returnPolicy": string,
+//       "minimumOrderQuantity": number,
+//       "meta": {
+//         "createdAt": string,
+//         "updatedAt": string,
+//         "barcode": string,
+//         "qrCode": string,
+//       },
+//       "thumbnail": string,
+//       "images": Array<string>,
+//     }
+  
+  
+//    type RatingsDeets = {
+
+//      "rating": number,
+//         "comment": string,
+//           "date": string,
+//           "reviewerName": string,
+//           "reviewerEmail": string
+
+//    }
