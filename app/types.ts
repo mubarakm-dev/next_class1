@@ -58,5 +58,6 @@ export type ComplexProducts = {
       },
       "views":number,
       "userId": number,
+      author: string,
     }
    
