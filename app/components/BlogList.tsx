@@ -1,22 +1,22 @@
-import React from 'react'
+import React, { use } from 'react'
 import { BlogPosts } from '../types'
-import { log } from 'console'
 import Image from 'next/image'
 
-const blog = async () => {
-    const data = await fetch("https://dummyjson.com/posts")
-    const posts = await data.json()
-    const convPosts: BlogPosts[] = posts.posts
-    console.log(convPosts);
+
+
+
+const BlogList = ({posts}:{posts:Promise<BlogPosts[]>}) => {
+    const allPosts = use(posts)
 
     return (
-
+        
         <div>
-            <h1 className="text-2xl font-bold flex justify-center">Hottest Stories From the Blog Community</h1>
+            
+            {/* <h1 className="text-2xl font-bold flex justify-center">Hottest Stories From the Blog Community</h1> */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-4 ">
 
                 {
-                    convPosts.map((post, idx) => (
+                    allPosts.map((post, idx) => (
                         <div key={idx} className='border border-gray-300 p-4 rounded-lg shadow-md flex flex-col justify-between gap-2.5 hover:shadow-lg transition-shadow duration-300 '>
 
                             <div className="flex flex-row justify-between">
@@ -53,11 +53,7 @@ const blog = async () => {
             </div>
 
         </div>
-
-
     )
-
 }
 
-export default blog
-
+export default BlogList

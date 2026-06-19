@@ -13,6 +13,7 @@ export const getProducts= async()=>{
 
         return convProducts
 }
+
 const Page = () => {
     const products = getProducts()
   return (

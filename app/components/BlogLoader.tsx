@@ -1,6 +1,6 @@
 import React from 'react'
 
-const loading = () => {
+const BlogLoader = () => {
     return (
         <div>
             <h1 className="text-2xl font-bold flex justify-center">Hottest Stories From the Blog Community</h1>
@@ -12,8 +12,8 @@ const loading = () => {
                         <div key={idx} className='border border-gray-300 p-4 justify-between rounded-lg shadow-md flex flex-col gap-2.5 hover:shadow-lg transition-shadow duration-300'>
 
                             <div className="flex flex-row justify-between">
-                                <h1 className='h-3 w-3/4 text-lg font-bold  break-words bg-gray-400  rounded-2xl animate-pulse transition-all duration-100'></h1>
-                                <p className='flex items-center justify-center size-8 text-sm shrink-0 border bg-gray-400 animate-pulse rounded-full'>
+                                <h1 className='h-3 size-80 text-lg font-bold gap-2 items-start wrap-break-word bg-gray-400  rounded-2xl animate-pulse transition-all duration-100'></h1>
+                                <p className='flex items-center justify-center size-8 text-sm shrink-0 border border-gray-300 rounded-full'>
 
                                 </p>
 
@@ -44,8 +44,7 @@ const loading = () => {
             </div>
 
         </div>
-
     )
 }
 
-export default loading
+export default BlogLoader
