@@ -1,8 +1,10 @@
 import React from "react";
 import { ComplexProducts } from "../types";
 import Image from "next/image";
+import { dbConnect } from "../libs/dbconnect";
 
 const Products = async () => {
+  await dbConnect()
   const data = await fetch("https://dummyjson.com/products");
   const products = await data.json();
 
