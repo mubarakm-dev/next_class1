@@ -60,4 +60,11 @@ export type ComplexProducts = {
       "userId": number,
       author: string,
     }
+
+   export type User={
+      firstname:string
+      lastname:string,
+      email:string,
+      password:string,
+    }
    
