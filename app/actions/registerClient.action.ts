@@ -1,19 +1,17 @@
-"use server"
-
 import { revalidatePath } from "next/cache"
 import { dbConnect } from "../libs/dbconnect"
 import UserModel from "../models/user.model"
 import { redirect } from "next/navigation"
+import { User } from "../types"
 
-
- export const registerUser = async(form:FormData)=>{
+export const registerUser = async(form:User)=>{
 
 
     const user = {
-        firstname: String(form.get("firstname")) ,
-        lastname:form.get("lastname")?.toString(),
-        email:form.get("email")?.toString(),
-        password:form.get("password")?.toString(),
+        firstname: form.firstname,
+        lastname:form.lastname,
+        email:form.email,
+        password:form.password
 
     }
 

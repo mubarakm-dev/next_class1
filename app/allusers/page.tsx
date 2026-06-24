@@ -7,7 +7,7 @@ import { User } from '../types'
 const fetchUser = async () => {
 
     await dbConnect()
-    const users = await UserModel.find({})
+    const users:User[] = await UserModel.find()
     return (
 
         <div>
@@ -15,8 +15,8 @@ const fetchUser = async () => {
              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-4 ">
             {
                 users.map((user, idx) => (
-                    <div key={user._id.toString()} className='border border-gray-300 p-4 rounded-lg shadow-md flex flex-col justify-between gap-2.5 hover:shadow-lg transition-shadow duration-300' >
-                        <h1>{user.firstname}</h1>
+                    <div key={user._id} className='border border-gray-300 p-4 rounded-lg shadow-md flex flex-col justify-between gap-2.5 hover:shadow-lg transition-shadow duration-300' >
+                        <h1>{idx+1}.{user.firstname}</h1>
                         <p>{user.lastname}</p>
                         <p>{user.email}</p>
                     </div>
@@ -25,9 +25,45 @@ const fetchUser = async () => {
             }
         </div>
         </div>
-       
+
 
     )
 }
 
 export default fetchUser
+
+// import React from 'react'
+// import { User } from '../types'
+// import useSWR from 'swr'
+// import { dbConnect } from '../libs/dbconnect'
+// import UserModel from '../models/user.model'
+
+// const fetcher = (url: string) => fetch(url).then((r) => r.json())
+
+// const page = async () => {
+
+//     await dbConnect()
+   
+
+//     const { data, error, isLoading } = useSWR("users", fetcher)
+
+//     if (isLoading) return <div>Loading...</div>
+//     if (error) return <div>Error: {error.message}</div>
+
+//      const users: User[] = await UserModel.find()
+
+
+//     return (
+//         <div>
+
+//             {
+//                 users.map((user, idx)=>(
+//                     <div key={user._id}>{idx+1}{user.firstname}</div>
+//                 ))
+//             }
+
+//         </div>
+//     )
+// }
+
+// export default page

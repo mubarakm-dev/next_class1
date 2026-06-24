@@ -1,7 +1,41 @@
-import React from 'react'
+"use client"
+import React, { ChangeEvent, useState } from 'react'
 import { registerUser } from '../actions/user.actions'
 
 const page = () => {
+
+    const [User, setUser] = useState({
+
+        firstname:"",
+        lastname:"",
+        email:"",
+        password:""
+
+    })
+
+    const handleChange = (e:ChangeEvent<HTMLInputElement>)=>{
+
+        const {name, value}=e.target
+        setUser({
+            ...User,
+            [name]:value
+        })
+
+
+    }
+
+
+  const submitForm=async(User:User)=>{
+    console.log(User);
+    registerUser(User)
+    console.log("I am working");
+  
+  }
+
+
+
+
+
     return (
         <div className="flex h-screen justify-center items-center px-2">
 
@@ -10,25 +44,25 @@ const page = () => {
 
                 <div>
                     <label htmlFor="firstname">First Name:</label>
-                    <input type="text" name='firstname' className="border outline-1 focus:outline-green-300 p-2 w-full rounded-sm" />
+                    <input type="text" name='firstname' className="border outline-1 focus:outline-green-300 p-2 w-full rounded-sm"  onChange={handleChange} />
                 </div>
 
                 <div>
                     <label htmlFor="lastname">Last Name:</label>
-                    <input type="text" name='lastname' className="border outline-1 focus:outline-green-300 p-2 w-full rounded-sm" />
+                    <input type="text" name='lastname' className="border outline-1 focus:outline-green-300 p-2 w-full rounded-sm"  onChange={handleChange}/>
                 </div>
 
                 <div>
                     <label htmlFor="Email">Email:</label>
-                    <input type="text" name='email' className="border outline-1 focus:outline-green-300 p-2 w-full rounded-sm" />
+                    <input type="text" name='email' className="border outline-1 focus:outline-green-300 p-2 w-full rounded-sm"  onChange={handleChange} />
                 </div>
 
                 <div>
                     <label htmlFor="Password">Password:</label>
-                    <input type="password" name='password' className="border outline-1 focus:outline-green-300 p-2 w-full rounded-sm" />
+                    <input type="password" name='password' className="border outline-1 focus:outline-green-300 p-2 w-full rounded-sm"   onChange={handleChange}/>
                 </div>
 
-                <button className=" py-2 bg-black text-white rounded-sm hover:bg-red-700 hover:cursor-pointer hover:translate-y-1 hover:transition">Register</button>
+                <button onClick={()=>submitForm(User)} className=" py-2 bg-black text-white rounded-sm hover:bg-red-700 hover:cursor-pointer hover:translate-y-1 hover:transition">Register</button>
             </form>
 
         </div>
