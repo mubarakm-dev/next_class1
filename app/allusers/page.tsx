@@ -4,6 +4,8 @@ import UserModel from '../models/user.model'
 
 import { User } from '../types'
 
+
+
 const fetchUser = async () => {
 
     await dbConnect()
@@ -16,7 +18,7 @@ const fetchUser = async () => {
             {
                 users.map((user, idx) => (
 
-                    <form action={`/allusers/${user._id}`}  key={user._id}>
+                    <form action={`/allusers/${user._id}/shoes`}  key={user._id}>
                         <div className='border border-gray-300 p-4 rounded-lg shadow-md flex flex-col justify-between gap-2.5 hover:shadow-lg transition-shadow duration-300' >
                         <h1>{idx+1}.{user.firstname}</h1>
                         <p>{user.lastname}</p>
