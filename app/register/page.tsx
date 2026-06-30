@@ -24,25 +24,7 @@ const regsiterSchema = yup.object({
 
 const page = () => {
 
-    // const [User, setUser] = useState({
-
-    //     firstname:"",
-    //     lastname:"",
-    //     email:"",
-    //     password:""
-
-    // })
-
-    // const handleChange = (e:ChangeEvent<HTMLInputElement>)=>{
-
-    //     const {name, value}=e.target
-    //     setUser({
-    //         ...User,
-    //         [name]:value
-    //     })
-
-
-    // }
+   
 
     // formik.values - get values
     // formik.errors - error to show if validation is wrong - validation from yup
@@ -129,7 +111,7 @@ const page = () => {
                     {formik.touched.password && formik.errors.password && ( <p className="text-red-500 text-sm">{formik.errors.password}</p> )}
                 </div>
 
-                <button type='submit' disabled={formik.isSubmitting} className=" py-2 bg-black text-white flex items-center justify-center rounded-sm hover:bg-red-700 hover:cursor-pointer hover:translate-y-1 hover:transition ">{formik.isSubmitting ? <LoadingSpinner/>: "Register"}</button>
+                <button type='submit' disabled={formik.isSubmitting} className=" py-2 bg-black text-white flex items-center justify-center rounded-sm hover:bg-red-700 hover:cursor-pointer hover:translate-y-1 hover:transition ">{formik.isSubmitting ? "Registering....": "Register"}</button>
             
             </div>
 

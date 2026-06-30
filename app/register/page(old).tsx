@@ -1,9 +1,39 @@
 //server function
-
-import React from 'react'
+"use client"
+import React, { ChangeEvent, useState } from 'react'
 import { registerUser } from '../actions/user.actions'
+import { User } from '../types'
+import { log } from 'console'
 
 const page = () => {
+
+
+    
+
+    const [User, setUser] = useState<User>({
+
+        firstname:"",
+        lastname:"",
+        email:"",
+        password:"",
+
+    })
+
+    const [loading, setloading] = useState<boolean>(false)
+
+    const handleChange = (e:ChangeEvent <HTMLInputElement>)=>{
+
+        console.log(e.target.value)
+             console.log(e.target.name)
+
+        const {name, value}=e.target
+        setUser({
+            ...User,
+            [name]:value
+        })
+
+
+    }
     return (
         <div className="flex h-screen justify-center items-center px-2">
 
