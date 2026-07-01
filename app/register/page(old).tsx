@@ -41,7 +41,8 @@ const page = () => {
         console.log(User);
         await registerUser(User)
         setloading(false)
-        console.log("I am working");}
+        console.log("I am working");
+    }
 
     return (
         <div className="flex h-screen justify-center items-center px-2">
