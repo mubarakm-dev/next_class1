@@ -3,7 +3,7 @@ import React, { ChangeEvent, useState } from 'react'
 import { useActionState, startTransition } from 'react'
 
 import { registerForUser } from '../actions/registerClient.action'
-import { User } from '../types'
+import { User, UserWithoutId } from '../types'
 import { useFormik } from 'formik'
 import * as yup from "yup";
 import LoadingSpinner from '../components/LoadingSpinner'
@@ -33,7 +33,7 @@ const page = () => {
     // formik.handleBlur - update touched
     // formik.handleSubmit - Validates and then calls your onSubmit
 
-    const formik = useFormik({
+    const formik = useFormik<UserWithoutId>({
         initialValues: {
             firstname: "",
             lastname: "",
@@ -48,12 +48,13 @@ const page = () => {
 
             try {
                 await registerForUser(values);
+                
+            formik.resetForm()
             } catch (error) {
                 console.log(error)
             }
 
 
-            formik.resetForm()
         }
 
 

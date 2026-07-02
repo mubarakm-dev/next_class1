@@ -132,7 +132,7 @@ const simpleMe:SimpleUser ={
 
 
 
-type UserExcludingCar = Omit<User, "car" | "career"> 
+type UserExcludingCar = Omit<User, "car" | "career"> //
 
 const UserWithoutCar:UserExcludingCar ={
     fullName: "",

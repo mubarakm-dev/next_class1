@@ -3,10 +3,10 @@ import { revalidatePath } from "next/cache"
 import { dbConnect } from "../libs/dbconnect"
 import UserModel from "../models/user.model"
 import { redirect } from "next/navigation"
-import { User } from "../types"
+import { User, UserWithoutId } from "../types"
 import * as bcrypt from "bcryptjs";
 
-export const registerForUser = async (form: User) => {
+export const registerForUser = async (form: UserWithoutId) => {
     // try {
         await dbConnect()
 
@@ -41,6 +41,22 @@ export const registerForUser = async (form: User) => {
     //     }
 
     // }
+
+
+}
+
+export const deleteUser = async (id: string) =>{
+    await dbConnect()
+    const user = await UserModel.findByIdAndDelete(id)
+    if(!user){
+        throw new Error("User not found")
+    }
+
+          revalidatePath("/allusers")
+
+    
+
+
 
 
 }
