@@ -35,12 +35,7 @@ export const registerForUser = async (form: UserWithoutId) => {
         redirect("/allusers")
 
 
-    // } catch (error: any) {
-    //     if (error.code === 11000) {
-    //         throw new Error("Email already exists");
-    //     }
-
-    // }
+    
 
 
 }
@@ -53,10 +48,6 @@ export const deleteUser = async (id: string) =>{
     }
 
           revalidatePath("/allusers")
-
-    
-
-
 
 
 }
