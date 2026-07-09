@@ -62,7 +62,7 @@ export type BlogPosts = {
 }
 
 export type User = {
-  _id: string,
+  _id?: string,
   firstname: string
   lastname: string,
   email: string,

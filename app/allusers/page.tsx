@@ -4,12 +4,14 @@ import UserModel from '../models/user.model'
 
 import { User } from '../types'
 import { deleteUser } from '../actions/registerClient.action'
+import { isAuth } from '../libs/session'
 
 
 
 const fetchUser = async () => {
 
     await dbConnect()
+    await isAuth()
     const users:User[] = await UserModel.find()
 
     return (

@@ -1,8 +1,8 @@
 "use client"
 import React, { ChangeEvent, useState } from "react";
 import page from "../page";
-import { useRouter } from "next/router";
-import { loginUser2 } from "../actions/user.actions";
+import { useRouter } from "next/navigation";
+import { loginUser } from "../actions/user.actions";
 
 const Page = () => {
 
@@ -24,19 +24,21 @@ const Page = () => {
       [name]: value,
     });
   };
-  const router = useRouter();
+  
+  const router = useRouter()
 
   const handleLogin = async () => {
     console.log(User);
 
-    const response = await loginUser2(User);
+    const response = await loginUser(User);
 
     console.log(response.message);
 
     if (response.status == 400) {
       alert(response.message);
     } else {
-      router.push("/allusers");
+      router.push("/users");
+     
     }
     // refresh()
   };

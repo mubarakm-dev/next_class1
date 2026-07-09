@@ -1,8 +1,9 @@
 
 "use client"
 import React, { useActionState } from 'react'
-import { loginUser } from '../actions/user.actions'
+import {  loginUser2 } from '../actions/user.actions'
 import { User } from '../types';
+
 
 const initialState = {
     message: "",
@@ -10,8 +11,8 @@ const initialState = {
 };
 
 const Page = () => {
-
-        const [state, formAction, pending] = useActionState(loginUser, initialState)
+    
+        const [state, formAction, pending] = useActionState(loginUser2, initialState)
 
     return (
 

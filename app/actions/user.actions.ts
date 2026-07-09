@@ -5,23 +5,35 @@ import { dbConnect } from "../libs/dbconnect"
 import UserModel from "../models/user.model"
 import { redirect } from "next/navigation"
 import * as bcrypt from "bcryptjs";
-import { encyrpt } from "../libs/session"
+import { decrypt, encrypt } from "../libs/session"
+import { cookies } from "next/headers"
+import { User } from "../types"
 
 
-export const registerUser = async (form: FormData) => {
-
+export const registerUser = async (form: User) => {
     try {
+        console.log(form);
+        // const user= {
+        // firstname:String(form.get("firstname")),
+        // lastname:form.get("firstname")?.toString(),
+        // email:form.get("email")?.toString(),
+        // password:form.get('password')?.toString()
+        const firstname = form.firstname;
+        const lastname = form.lastname;
+        const email = form.email;
+        const password = form.password;
+        // }
 
-        const user = {
-            firstname: String(form.get("firstname")),
-            lastname: form.get("lastname")?.toString(),
-            email: form.get("email")?.toString(),
-            password: form.get("password")?.toString(),
+        await dbConnect();
+        const saltRound = 10;
+        const hashedPassword = await bcrypt.hash(form.password, saltRound);
 
-        }
-
-        await dbConnect()
-        const createdUser = await UserModel.create(user)
+        const createdUser = await UserModel.create({
+            firstname,
+            lastname,
+            email,
+            password: hashedPassword,
+        });
 
         if (!createdUser) {
             return {
@@ -29,47 +41,53 @@ export const registerUser = async (form: FormData) => {
                 message: "User creation failed",
             };
         }
-        const token = await encyrpt({id:createdUser._id})
-        console.log("I am working")
 
-        revalidatePath("/allusers")
+        const token = await encrypt({ id: createdUser._id })
+
+        console.log(token);
+
+
+        // redirect("/users")
+
+        const expiry = await decrypt(token)
+
+        const cookieStore = await cookies()
+        const timeOfExp = expiry.payload?.exp ? new Date(expiry.payload?.exp * 1000) : undefined
+        cookieStore.set("token", token, { expires: timeOfExp })
+
+        revalidatePath("/users");
         return {
             status: 201,
             message: "user created successfully",
-            data: {
-                firstname: createdUser.firstname,
-                lastname:createdUser.lastname
-            }
+            data: createdUser,
+            token
         }
-        // redirect("/allusers")
+        // console.log("i am workinggggg");
 
 
     } catch (error: any) {
-        if (error.code === 11000) {
+        console.log(error.code);
+
+
+        if (error.code == 11000) {
             return {
                 status: 500,
                 message: "User already exist!",
-            }
-        }
-        else {
+
+            };
+        } else {
             return {
                 status: 500,
                 message: "User creation failed",
-            }
 
-
+            };
         }
-
-
     }
+};
 
-}
-
-export const loginUser = async (initialState: any, form: FormData) => {
+export const loginUser =  async ({email, password,}: {email: string; password: string;})=> {
     await dbConnect()
-    const email = form.get("email")?.toString()
-    const password = form.get("password")?.toString()
-   
+
 
 
     if (!email || !password) {
@@ -96,9 +114,18 @@ export const loginUser = async (initialState: any, form: FormData) => {
             message: "Invalid email or password"
         }
     }
-       const token = await encyrpt({id:user._id})
-       console.log(token);
-       
+    const token = await encrypt({ id: user._id.toString() })
+    console.log("token", token);
+    console.log("id from db", user._id.toString());
+
+    const expiry = await decrypt(token)
+
+    const cookieStore = await cookies()
+    const timeOfExp = expiry.payload?.exp ? new Date(expiry.payload?.exp * 1000) : undefined
+    const userId = expiry.payload?.id
+    console.log("id from token", userId);
+
+    cookieStore.set("token", token, { expires: timeOfExp })
 
     return {
         success: true,
@@ -106,7 +133,8 @@ export const loginUser = async (initialState: any, form: FormData) => {
             id: user._id.toString(),
             email: user.email,
 
-        }
+        },
+        token
     }
 }
 
@@ -126,7 +154,7 @@ export const getUser = async (id: string) => {
 
 
 
-export const loginUser2 = async ({email, password}:{email:string, password:string}) => {
+export const loginUser2 = async ({ email, password }: { email: string, password: string }) => {
     await dbConnect()
     // const email = form.get("email")?.toString()
     // const password = form.get("password")?.toString()
@@ -157,9 +185,19 @@ export const loginUser2 = async ({email, password}:{email:string, password:strin
             message: "Invalid email or password"
         }
     }
+    const token = await encrypt({ id: user._id })
+    const expiry = await decrypt(token)
+
+    const cookieStore = await cookies()
+    const timeOfExp = expiry.payload?.exp ? new Date(expiry.payload?.exp * 1000) : undefined
+    const userId = expiry.payload?.id
+    console.log("id from token", userId);
+
+    cookieStore.set("token", token, { expires: timeOfExp })
 
     return {
-        success: true,
+        status: 200,
+        message: "Login successful",
         user: {
             id: user._id.toString(),
             email: user.email,
